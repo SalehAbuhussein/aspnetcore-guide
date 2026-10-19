@@ -805,17 +805,23 @@ export default defineConfig({
     const description = introOf(join(siteConfig.srcDir, page.relativePath))
     if (description) page.description = description
   },
-  transformHead({ pageData }) {
+  transformHead({ pageData, siteConfig }) {
     const path = pageData.relativePath.replace(/(index)?\.md$/, '')
     const url = site + path
-    const title = pageData.title ? `${pageData.title} | ASP.NET Core Guide` : 'ASP.NET Core Guide'
-    const description = pageData.frontmatter.description ?? pageData.description
+    const name = siteConfig.site.title
+    const isHome = path === ''
+    const title = isHome || !pageData.title || pageData.title === name ? name : `${pageData.title} | ${name}`
+    const description = pageData.frontmatter.description || pageData.description || siteConfig.site.description
     return [
       ['link', { rel: 'canonical', href: url }],
+      ['meta', { property: 'og:site_name', content: name }],
       ['meta', { property: 'og:url', content: url }],
       ['meta', { property: 'og:title', content: title }],
       ['meta', { property: 'og:description', content: description }],
-      ['meta', { property: 'og:type', content: 'article' }],
+      ['meta', { property: 'og:type', content: isHome ? 'website' : 'article' }],
+      ['meta', { property: 'og:image:width', content: '2400' }],
+      ['meta', { property: 'og:image:height', content: '1260' }],
+      ['meta', { property: 'og:image:alt', content: 'ASP.NET Core Guide: Laravel-style docs for .NET 10' }],
     ]
   },
   head: [
