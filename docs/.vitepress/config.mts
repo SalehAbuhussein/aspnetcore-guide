@@ -1,4 +1,21 @@
 import { defineConfig } from 'vitepress'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+
+const site = 'https://salehabuhussein.github.io/aspnetcore-guide/'
+
+// First paragraph under "## Introduction", stripped to plain text, as the page description.
+function introOf(file: string) {
+  const md = readFileSync(file, 'utf8')
+  const para = md.split(/^## Introduction\s*$/m)[1]?.trim().split(/\n\s*\n/)[0] ?? ''
+  const text = para
+    .replace(/`([^`]*)`/g, '$1')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/[*_<>]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  return text.length > 160 ? text.slice(0, 157).replace(/\s+\S*$/, '') + '...' : text
+}
 
 const mvc = [
   {
@@ -782,6 +799,25 @@ export default defineConfig({
   description: 'A plain, step-by-step guide to ASP.NET Core MVC and Web API on .NET 10.',
   cleanUrls: true,
   lastUpdated: true,
+  sitemap: { hostname: site },
+  transformPageData(page, { siteConfig }) {
+    if (page.frontmatter.description || page.description) return
+    const description = introOf(join(siteConfig.srcDir, page.relativePath))
+    if (description) page.description = description
+  },
+  transformHead({ pageData }) {
+    const path = pageData.relativePath.replace(/(index)?\.md$/, '')
+    const url = site + path
+    const title = pageData.title ? `${pageData.title} | ASP.NET Core Guide` : 'ASP.NET Core Guide'
+    const description = pageData.frontmatter.description ?? pageData.description
+    return [
+      ['link', { rel: 'canonical', href: url }],
+      ['meta', { property: 'og:url', content: url }],
+      ['meta', { property: 'og:title', content: title }],
+      ['meta', { property: 'og:description', content: description }],
+      ['meta', { property: 'og:type', content: 'article' }],
+    ]
+  },
   head: [
     // Apply the saved Minimal APIs / Controllers choice before first paint.
     ['script', {}, "try{if(localStorage.getItem('api-style')==='controllers')document.documentElement.dataset.apiStyle='controllers'}catch(e){}"],

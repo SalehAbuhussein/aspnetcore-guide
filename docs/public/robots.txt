@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://salehabuhussein.github.io/aspnetcore-guide/sitemap.xml
