@@ -1,0 +1,97 @@
+@TodoApi_HostAddress = http://localhost:5000
+@token = paste-your-token-here
+
+### List todos (first page)
+GET {{TodoApi_HostAddress}}/todos
+
+### Second page of 5
+GET {{TodoApi_HostAddress}}/todos?page=2&pageSize=5
+
+### Filter and sort
+GET {{TodoApi_HostAddress}}/todos?isDone=false&search=milk&sort=-title
+
+### Get one todo
+GET {{TodoApi_HostAddress}}/todos/1
+Authorization: Bearer {{token}}
+
+### Create a todo
+POST {{TodoApi_HostAddress}}/todos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Write the CRUD page"
+}
+
+### Update a todo
+PUT {{TodoApi_HostAddress}}/todos/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Write the CRUD page",
+  "isDone": true
+}
+
+### Delete a todo (needs a token with the Admin role)
+DELETE {{TodoApi_HostAddress}}/todos/1
+Authorization: Bearer {{token}}
+
+### Break a validation rule
+POST {{TodoApi_HostAddress}}/todos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": ""
+}
+
+### Stats
+GET {{TodoApi_HostAddress}}/todos/stats
+Authorization: Bearer {{token}}
+
+### Queue a reminder email
+POST {{TodoApi_HostAddress}}/todos/1/remind
+Authorization: Bearer {{token}}
+
+### Upload an attachment
+POST {{TodoApi_HostAddress}}/todos/1/attachment
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=WebBoundary
+
+--WebBoundary
+Content-Disposition: form-data; name="file"; filename="notes.txt"
+Content-Type: text/plain
+
+< ./notes.txt
+--WebBoundary--
+
+### Download it
+GET {{TodoApi_HostAddress}}/todos/1/attachment
+Authorization: Bearer {{token}}
+
+### Projects
+GET {{TodoApi_HostAddress}}/projects
+
+### Project details
+GET {{TodoApi_HostAddress}}/projects/1
+
+### Create a project
+POST {{TodoApi_HostAddress}}/projects
+Content-Type: application/json
+
+{
+  "name": "Home"
+}
+
+### Add a todo to a project
+POST {{TodoApi_HostAddress}}/projects/1/todos
+Content-Type: application/json
+
+{
+  "title": "Plan the week"
+}
+
+### Who am I?
+GET {{TodoApi_HostAddress}}/me
+Authorization: Bearer {{token}}

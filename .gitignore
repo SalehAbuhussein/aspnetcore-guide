@@ -1,0 +1,25 @@
+node_modules
+docs/.vitepress/cache
+docs/.vitepress/dist
+
+# Sample apps
+samples/**/bin/
+samples/**/obj/
+samples/**/*.db
+samples/**/*.db-shm
+samples/**/*.db-wal
+samples/**/wwwroot/uploads/
+samples/**/uploads/
+
+# Root VitePress cache from running the CLI outside docs/
+/.vitepress/
+
+# Design-review captures (regenerated)
+.impeccable/review/
+.impeccable/mocks/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vs/
+*.user

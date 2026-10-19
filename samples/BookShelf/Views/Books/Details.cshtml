@@ -1,0 +1,42 @@
+@model BookShelf.Models.Book
+
+<h1>@Model.Title</h1>
+<p>@Model.Author, @Model.Year</p>
+
+@if (Model.CoverPath is not null)
+{
+    <img src="@Model.CoverPath" alt="Cover of @Model.Title" width="200" />
+}
+
+<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+<a asp-action="Index">Back to list</a>
+
+@if (TempData["Message"] is string message)
+{
+    <p>@message</p>
+}
+
+<h2>Reviews (@Model.Reviews.Count)</h2>
+@foreach (var review in Model.Reviews)
+{
+    <p>@review.Rating/5: @review.Body</p>
+}
+
+<form asp-action="AddReview" asp-route-id="@Model.Id" method="post">
+    <label for="Rating">Rating</label>
+    <input id="Rating" name="Rating" type="number" min="1" max="5" value="5" />
+    <label for="Body">Review</label>
+    <textarea id="Body" name="Body"></textarea>
+    <button type="submit">Post review</button>
+</form>
+
+@if (ViewData["Recent"] is List<BookShelf.Models.Book> recent && recent.Count > 0)
+{
+    <h2>Recently viewed</h2>
+    <ul>
+        @foreach (var b in recent)
+        {
+            <li><a asp-action="Details" asp-route-id="@b.Id">@b.Title</a></li>
+        }
+    </ul>
+}

@@ -1,0 +1,8 @@
+@model BookShelf.Models.Book
+
+<h1>Delete @Model.Title?</h1>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    <button type="submit">Yes, delete it</button>
+    <a asp-action="Index">Cancel</a>
+</form>

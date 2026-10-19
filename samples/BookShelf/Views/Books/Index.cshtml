@@ -1,0 +1,43 @@
+@model BookShelf.Models.BookListViewModel
+
+<h1>Books</h1>
+<a asp-action="Create">Add a book</a>
+
+@if (TempData["Message"] is string message)
+{
+    <p>@message</p>
+}
+
+<form method="get">
+    <input name="search" value="@Model.Search" placeholder="Title or author" />
+    <button type="submit">Search</button>
+</form>
+
+<p>@Model.TotalCount books found.</p>
+
+<table>
+    @foreach (var book in Model.Books)
+    {
+        <tr>
+            <td><a asp-action="Details" asp-route-id="@book.Id">@book.Title</a></td>
+            <td>@book.Author</td>
+            <td>@book.ReviewCount reviews</td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td><a asp-action="Delete" asp-route-id="@book.Id">Delete</a></td>
+            }
+        </tr>
+    }
+</table>
+
+<nav>
+    @if (Model.Page > 1)
+    {
+        <a asp-action="Index" asp-route-search="@Model.Search" asp-route-page="@(Model.Page - 1)">Previous</a>
+    }
+    <span>Page @Model.Page of @Model.TotalPages</span>
+    @if (Model.Page < Model.TotalPages)
+    {
+        <a asp-action="Index" asp-route-search="@Model.Search" asp-route-page="@(Model.Page + 1)">Next</a>
+    }
+</nav>

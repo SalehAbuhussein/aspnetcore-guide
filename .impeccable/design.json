@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-02T00:00:00Z",
+  "title": "Design System: ASP.NET Core Guide",
+  "extensions": {
+    "colorMeta": {
+      "dotnet-purple": { "role": "primary", "displayName": ".NET Purple", "canonical": "#512bd4", "tonalRamp": ["#1c0f4a", "#2a1670", "#3f1fb0", "#512bd4", "#7556e0", "#a593ff", "#cdc2ff", "#ece7ff"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#ffffff", "tonalRamp": ["#121019", "#1b1830", "#55526a", "#6f6c85", "#e8e5f0", "#f3f1f9", "#f8f7fb", "#ffffff"] }
+    },
+    "shadows": [
+      { "name": "segment-raise", "value": "0 1px 2px rgba(27,24,48,0.08), 0 2px 6px rgba(27,24,48,0.06)", "purpose": "Active segment of the track switch." },
+      { "name": "panel-hover", "value": "0 8px 30px rgba(27,24,48,0.08)", "purpose": "Hovered track panel on the home page." }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "All state transitions, 180 to 250ms." }
+    ],
+    "breakpoints": [ { "name": "stack", "value": "768px" } ]
+  },
+  "components": [
+    {
+      "name": "Track switch",
+      "kind": "nav",
+      "refersTo": "track-switch-active",
+      "description": "Two-segment MVC / Web API switch at the top of the sidebar.",
+      "html": "<nav class=\"ds-track\"><a href=\"#\" aria-current=\"page\">MVC</a><a href=\"#\">Web API</a></nav>",
+      "css": ".ds-track{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border:1px solid #e8e5f0;border-radius:10px;background:#f8f7fb;font-family:Figtree,system-ui,sans-serif;width:208px}.ds-track a{padding:7px 0;border-radius:7px;text-align:center;font-size:14px;font-weight:600;color:#55526a;text-decoration:none;transition:background-color .18s cubic-bezier(.16,1,.3,1),color .18s}.ds-track a:hover{color:#1b1830}.ds-track a:focus-visible{outline:2px solid #512bd4;outline-offset:2px}.ds-track a[aria-current=page]{background:#fff;color:#512bd4;box-shadow:0 1px 2px rgba(27,24,48,.08),0 2px 6px rgba(27,24,48,.06)}"
+    },
+    {
+      "name": "Track panel link",
+      "kind": "button",
+      "refersTo": "track-panel",
+      "description": "Footer action row of a home track panel.",
+      "html": "<a class=\"ds-go\" href=\"#\">Start the MVC guide <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>",
+      "css": ".ds-go{display:flex;align-items:center;justify-content:space-between;width:320px;padding:18px 28px;border:1px solid #e8e5f0;border-radius:14px;font-family:Figtree,system-ui,sans-serif;font-weight:650;color:#512bd4;text-decoration:none}.ds-go svg{transition:transform .25s cubic-bezier(.16,1,.3,1)}.ds-go:hover svg{transform:translateX(4px)}.ds-go:focus-visible{outline:2px solid #512bd4;outline-offset:2px}"
+    },
+    {
+      "name": "Inline code",
+      "kind": "chip",
+      "refersTo": "inline-code",
+      "description": "Code spans inside prose.",
+      "html": "<code class=\"ds-code\">AddControllersWithViews()</code>",
+      "css": ".ds-code{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;font-weight:500;color:#3f1fb0;background:rgba(81,43,212,.09);padding:3px 6px;border-radius:5px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Laravel handbook, in .NET purple",
+    "overview": "Laravel docs layout with .NET purple as the single accent. Quiet ground, code carries the weight.",
+    "keyCharacteristics": ["One purple accent", "Three-column docs layout", "Track switch in the version-picker slot", "Light and dark parity"],
+    "rules": [{ "name": "The One Accent Rule", "body": "Purple is the only hue outside syntax highlighting.", "section": "colors" }],
+    "dos": ["Keep the # Title, ## Introduction page shape", "Show code before explanation"],
+    "donts": ["No eyebrow labels, gradient text, or icon-card grids", "No code blocks inside links"]
+  }
+}
